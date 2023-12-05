@@ -9,11 +9,8 @@ export class RandomImages extends plugin {
             priority: 100,
             rule: [
                 {
-                    reg: '^#?随机图片$',
+                    reg: '^#?随机(.*)(图片|照片|图像)$',
                     fnc: 'randomImage'
-                }, {
-                    reg: '#?随机(.*)图片^',
-                    fnc: 'randomRoleImage'
                 }, {
                     reg: '^#img更新数据$',
                     fnc: 'getImagesData'
@@ -28,23 +25,24 @@ export class RandomImages extends plugin {
     }
     async randomImage() {
         const data = utils.getData('genshin-images-1')
-        const keys = Object.keys(data.tags)
-        const tag = this.getRandomValue(keys)
-        const mode = this.getRandomValue(['safe', 'sese'])
+        let tag = this.e.msg.replace(/#|随机|图片|照片|图像/g, '')
+        // logger.info(tag)
+        if (tag !== '') {
+            if (!(tag in data.tags)) {
+                return await this.e.reply('标签不存在，暂不支持别名')
+            }
+        }else {
+            const keys = Object.keys(data.tags)
+            tag = this.getRandomValue(keys)
+        }
+        let mode = this.getRandomValue(['safe', 'sese'])
+        if (!(mode in data['tags'][tag]['images'])) {
+            mode = this.getRandomValue(['safe', 'sese'].filter(item => item !== mode))
+        }
         const imgName = this.getRandomValue(data['tags'][tag]['images'][mode])
         logger.info(imgName)
         const imgUrl = `${this.proxy}/${this.preUrl}/gs/${mode}/${imgName}`
-        this.reply(segment.image(imgUrl))
-    }
-
-    async randomRoleImage() {
-        const data = utils.getData('genshin-images-1')
-        const tag = this.e.msg.replace(/#|随机|图片/g, '')
-        const mode = this.getRandomValue(['safe', 'sese'])
-        const imgName = this.getRandomValue(data['tags'][tag]['images'][mode])
-        logger.info(imgName)
-        const imgUrl = `${this.proxy}/${this.preUrl}/gs/${mode}/${imgName}`
-        this.reply(segment.image(imgUrl))
+        await this.e.reply(segment.image(imgUrl))
     }
 
     getRandomValue(list) {
@@ -55,7 +53,7 @@ export class RandomImages extends plugin {
         const url = 'https://mirror.ghproxy.com/https://raw.githubusercontent.com/feixuei/genshin-images-1/main/data.json'
         const data = await utils.fetchData(url)
         utils.saveJson(`${this.DATA_PATH}/genshin-images-1.json`, data)
-        this.reply(`data数据获取成功！`)
+        this.e.reply(`data数据获取成功！`)
     }
 
 }
