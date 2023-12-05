@@ -6,8 +6,8 @@ import fetch from 'node-fetch'
 class Utils {
     constructor() {
         this._PATH = process.cwd().replace(/\\/g, '/')
-        this.CFG_PATH = `${this._PATH}/plugins/images/config`
-        this.DATA_PATH = `${this._PATH}/plugins/images/data`
+        this.CFG_PATH = `${this._PATH}/plugins/image-plugin/config`
+        this.DATA_PATH = `${this._PATH}/plugins/image-plugin/data`
     }
     getCfg(fileName) {
         return this.readYaml(`${this.CFG_PATH}/${fileName}.yaml`)

@@ -12,14 +12,14 @@ export class RandomImages extends plugin {
                     reg: '^#?随机(.*)(图片|照片|图像)$',
                     fnc: 'randomImage'
                 }, {
-                    reg: '^#img更新数据$',
+                    reg: '^#随机图片更新$',
                     fnc: 'getImagesData'
                 }
             ]
         })
         this.data = utils.getData('data')
         this._PATH = process.cwd()
-        this.DATA_PATH = this._PATH + '/plugins/images/data'
+        this.DATA_PATH = this._PATH + '/plugins/image-plugin/data'
         this.proxy = 'https://mirror.ghproxy.com'
         this.preUrl = 'https://raw.githubusercontent.com/feixuei/genshin-images-1/main'
     }

@@ -2,7 +2,7 @@ import fs from "fs"
 
 let ret = []
 let apps = {}
-const files = fs.readdirSync("./plugins/images/apps").filter(file => file.endsWith(".js"))
+const files = fs.readdirSync("./plugins/image-plugin/apps").filter(file => file.endsWith(".js"))
 
 files.forEach((file) => {
     ret.push(import(`./apps/${file}`))
@@ -24,8 +24,8 @@ for (let i in files) {
 }
 
 logger.info('----------^-^----------')
-logger.info('images载入成功!')
-logger.info('仓库地址 https://github.com/feixuei/images')
+logger.info('image-plugin载入成功!')
+logger.info('仓库地址 https://github.com/feixuei/image-plugin')
 logger.info('插件群号: 0000000000')
 logger.info('Created By feixuei')
 logger.info('-----------------------')
