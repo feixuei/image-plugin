@@ -38,6 +38,7 @@ export class RandomImages extends plugin {
     }
 
     async randomRoleImage() {
+        const data = utils.getData('genshin-images-1')
         const tag = this.e.msg.replace(/#|随机|图片/g, '')
         const mode = this.getRandomValue(['safe', 'sese'])
         const imgName = this.getRandomValue(data['tags'][tag]['images'][mode])
