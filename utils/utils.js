@@ -45,7 +45,7 @@ class Utils {
         return false
     }
 
-    saveJson(filePath) {
+    saveJson(filePath, data) {
         try {
             fs.writeFileSync(filePath, JSON.stringify(data, null, 4), 'utf8')
             return true
