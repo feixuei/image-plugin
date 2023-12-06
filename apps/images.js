@@ -28,9 +28,9 @@ export class RandomImages extends plugin {
     async randomImage() {
         const data = utils.getData('genshin-images-1')
         let tag = this.e.msg.replace(/#|随机|图片|照片|图像/g, '')
-        tag = await alias.getGsName(tag)
-        if (!tag) return false
         if (tag !== '') {
+            tag = await alias.getGsName(tag)
+            if (!tag) return false
             if (!(tag in data.tags)) {
                 return await this.e.reply('暂无该角色图片！')
             }
