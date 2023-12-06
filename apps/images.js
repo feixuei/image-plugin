@@ -12,7 +12,7 @@ export class RandomImages extends plugin {
                     reg: '^#?随机(.*)(图片|照片|图像)$',
                     fnc: 'randomImage'
                 }, {
-                    reg: '^#随机图片更新$',
+                    reg: '^#随机图片数据更新$',
                     fnc: 'getImagesData'
                 }
             ]
@@ -53,7 +53,7 @@ export class RandomImages extends plugin {
         const url = 'https://mirror.ghproxy.com/https://raw.githubusercontent.com/feixuei/genshin-images-1/main/data.json'
         const data = await utils.fetchData(url)
         utils.saveJson(`${this.DATA_PATH}/genshin-images-1.json`, data)
-        this.e.reply(`data数据获取成功！`)
+        this.e.reply(`随机图片数据获取成功！`)
     }
 
 }
