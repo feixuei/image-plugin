@@ -1,4 +1,5 @@
 import utils from "../utils/utils.js"
+import alias from "../utils/alias.js"
 
 export class RandomImages extends plugin {
     constructor() {
@@ -17,8 +18,9 @@ export class RandomImages extends plugin {
                 }
             ]
         })
-        this.data = utils.getData('data')
+        
         this._PATH = process.cwd()
+        this.defData = utils.readJson(`${this._PATH}/plugins/image-plugin/defSet/data.json`)
         this.DATA_PATH = this._PATH + '/plugins/image-plugin/data'
         this.proxy = 'https://mirror.ghproxy.com'
         this.preUrl = 'https://raw.githubusercontent.com/feixuei/genshin-images-1/main'
@@ -26,10 +28,11 @@ export class RandomImages extends plugin {
     async randomImage() {
         const data = utils.getData('genshin-images-1')
         let tag = this.e.msg.replace(/#|随机|图片|照片|图像/g, '')
-        // logger.info(tag)
+        tag = await alias.getGsName(tag)
+        if (!tag) return false
         if (tag !== '') {
             if (!(tag in data.tags)) {
-                return await this.e.reply('标签不存在，暂不支持别名')
+                return await this.e.reply('暂无该角色图片！')
             }
         }else {
             const keys = Object.keys(data.tags)
