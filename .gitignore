@@ -4,3 +4,6 @@
 !/data/data.txt
 
 /config/config.yaml
+
+/repos/*
+!/repos/repos.txt

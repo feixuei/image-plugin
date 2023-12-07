@@ -53,21 +53,4 @@ export class RandomImages extends plugin {
         return list[Math.floor(Math.random() * list.length)]
     }
 
-    async getImagesData() {
-        let msgList = []
-        for (let game in this.defData) {
-            if (this.defData[game].length === 0) continue
-            for (let repo of this.defData[game]) {
-                logger.info(this.preProxy)
-                logger.info(repo.data_url)
-                let data = await utils.fetchData(`${this.preProxy}${repo.data_url}`)
-                utils.saveJson(`${this.DATA_PATH}/${repo.name}.json`, data)
-                msgList.push(`${repo.name} 更新成功！`)
-            }
-        }
-        msgList.push(`随机图片数据全部更新成功！`)
-        const forwardMsg = await common.makeForwardMsg(this.e, msgList, "更新随机图片数据")
-        await this.e.reply(forwardMsg)
-    }
-
 }

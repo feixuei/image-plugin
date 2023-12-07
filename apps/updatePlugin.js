@@ -9,12 +9,12 @@ export class UpdateRadImage extends plugin {
             priority: 100,
             rule: [
                 {
-                    reg: '^#随机图(插件)?(强制)?更新$',
+                    reg: '^#随机图插件(强制)?更新$',
                     permission: 'master',
                     fnc: 'updateImgPlug'
                 },
                 {
-                    reg: '^#随机图(插件)?更新日志$',
+                    reg: '^#随机图插件更新日志$',
                     fnc: 'updateImgPlugLog'
                 }
             ]
