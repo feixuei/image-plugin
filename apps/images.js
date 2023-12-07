@@ -1,5 +1,7 @@
 import utils from "../utils/utils.js"
 import alias from "../utils/alias.js"
+import common from "../../../lib/common/common.js"
+import imagesInfo from "../utils/imagesInfo.js"
 
 export class RandomImages extends plugin {
     constructor() {
@@ -12,40 +14,39 @@ export class RandomImages extends plugin {
                 {
                     reg: '^#?随机(.*)(图片|照片|图像)$',
                     fnc: 'randomImage'
-                }, {
-                    reg: '^#随机图片数据更新$',
-                    fnc: 'getImagesData'
                 }
             ]
         })
         
-        this._PATH = process.cwd()
-        this.defData = utils.readJson(`${this._PATH}/plugins/image-plugin/defSet/data.json`)
-        this.DATA_PATH = this._PATH + '/plugins/image-plugin/data'
-        this.proxy = 'https://mirror.ghproxy.com'
+        this._PATH = `${process.cwd().replace(/\\/g, '/')}/plugins/image-plugin`
+        this.defData = utils.readJson(`${this._PATH}/defSet/data.json`)
+        this.DATA_PATH = this._PATH + '/data'
+        this.cfg = utils.getCfg('config')
+        this.preProxy = this.cfg.usePreProxy ? this.cfg.preProxy : ''
+        this.preUrl = this.cfg.useLocalRepos ? '' : 
         this.preUrl = 'https://raw.githubusercontent.com/feixuei/genshin-images-1/main'
     }
     async randomImage() {
-        const data = utils.getData('genshin-images-1')
+        const tags = await imagesInfo.getTags()
+
         let tag = this.e.msg.replace(/#|随机|图片|照片|图像/g, '')
+
         if (tag !== '') {
             tag = await alias.getGsName(tag)
-            if (!tag) return false
-            if (!(tag in data.tags)) {
+            if (!tags.includes(tag)) {
                 return await this.e.reply('暂无该角色图片！')
             }
         }else {
-            const keys = Object.keys(data.tags)
-            tag = this.getRandomValue(keys)
+            tag = this.getRandomValue(tags)
         }
-        let mode = this.getRandomValue(['safe', 'sese'])
-        if (!(mode in data['tags'][tag]['images'])) {
-            mode = this.getRandomValue(['safe', 'sese'].filter(item => item !== mode))
-        }
-        const imgName = this.getRandomValue(data['tags'][tag]['images'][mode])
-        logger.info(imgName)
-        const imgUrl = `${this.proxy}/${this.preUrl}/gs/${mode}/${imgName}`
-        await this.e.reply(segment.image(imgUrl))
+
+        const pic = this.getRandomValue(await imagesInfo.getImages(tag))
+
+        const preUrl = this.cfg.useLocalRepos ? `file://${this._PATH}/repos/${pic.name}` : pic.preUrl
+        const imgUrl = preUrl + `/${pic.game}/${pic.mode}/${pic.fileName}`
+        logger.info(imgUrl)
+
+        return await this.e.reply(segment.image(imgUrl))
     }
 
     getRandomValue(list) {
@@ -53,10 +54,20 @@ export class RandomImages extends plugin {
     }
 
     async getImagesData() {
-        const url = 'https://mirror.ghproxy.com/https://raw.githubusercontent.com/feixuei/genshin-images-1/main/data.json'
-        const data = await utils.fetchData(url)
-        utils.saveJson(`${this.DATA_PATH}/genshin-images-1.json`, data)
-        this.e.reply(`随机图片数据获取成功！`)
+        let msgList = []
+        for (let game in this.defData) {
+            if (this.defData[game].length === 0) continue
+            for (let repo of this.defData[game]) {
+                logger.info(this.preProxy)
+                logger.info(repo.data_url)
+                let data = await utils.fetchData(`${this.preProxy}${repo.data_url}`)
+                utils.saveJson(`${this.DATA_PATH}/${repo.name}.json`, data)
+                msgList.push(`${repo.name} 更新成功！`)
+            }
+        }
+        msgList.push(`随机图片数据全部更新成功！`)
+        const forwardMsg = await common.makeForwardMsg(this.e, msgList, "更新随机图片数据")
+        await this.e.reply(forwardMsg)
     }
 
 }

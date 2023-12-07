@@ -1,2 +1,6 @@
 /temp
-/data/genshin-images-1.json
+
+/data/*
+!/data/data.txt
+
+/config/config.yaml

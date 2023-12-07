@@ -3,7 +3,7 @@
 
 # 使用直链 GitHub代理
 usePreProxy: false
-preProxy: https://mirror.ghproxy.com
+preProxy: https://mirror.ghproxy.com/
 
 # 使用本地图片/clone到本地的仓库；默认false 使用直链获取图片
 useLocalRepos: false

@@ -5,16 +5,26 @@ import fetch from 'node-fetch'
 
 class Utils {
     constructor() {
-        this._PATH = process.cwd().replace(/\\/g, '/')
-        this.CFG_PATH = `${this._PATH}/plugins/image-plugin/config`
-        this.DATA_PATH = `${this._PATH}/plugins/image-plugin/data`
+        this._PATH = `${process.cwd().replace(/\\/g, '/')}/plugins/image-plugin`
+        this.CFG_PATH = `${this._PATH}/config`
+        this.DATA_PATH = `${this._PATH}/data`
     }
     getCfg(fileName) {
-        return this.readYaml(`${this.CFG_PATH}/${fileName}.yaml`)
+        let data = this.readYaml(`${this.CFG_PATH}/${fileName}.yaml`)
+        if (data) return data
+        return this.readYaml(`${this.CFG_PATH}/default_${fileName}.yaml`)
+    }
+
+    saveCfg(fileName, data = {}) {
+        return this.saveYaml(`${this.CFG_PATH}/${fileName}.yaml`, data)
     }
 
     getData(fileName) {
         return this.readJson(`${this.DATA_PATH}/${fileName}.json`)
+    }
+
+    saveData(fileName, data = {}) {
+        return this.saveJson(`${this.DATA_PATH}/${fileName}.json`, data)
     }
 
     readYaml(filePath) {
@@ -62,7 +72,7 @@ class Utils {
     }
 
 /**
-body = {
+params = {
     method: "GET",
     body: JSON.stringify({
         a: "1",

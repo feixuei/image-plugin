@@ -4,6 +4,7 @@ class Alias {
     constructor() {
         this._PATH = process.cwd().replace(/\\/g, '/')
         this.gsNames = utils.readYaml(`${this._PATH}/plugins/image-plugin/defSet/gsName.yaml`)
+        // this.srNames = utils.readYaml(`${this._PATH}/plugins/image-plugin/defSet/srName.yaml`)
     }
 
     async getGsName(aName) {
