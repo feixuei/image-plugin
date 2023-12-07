@@ -7,4 +7,4 @@ preProxy: https://mirror.ghproxy.com/
 
 # 使用本地图片/clone到本地的仓库；默认false 使用直链获取图片
 useLocalRepos: false
-repoPath: "/path/to/your/repos"
+repoPath: /path/to/your/repos

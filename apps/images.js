@@ -43,7 +43,7 @@ export class RandomImages extends plugin {
         const pic = this.getRandomValue(await imagesInfo.getImages(tag))
 
         const preUrl = this.cfg.useLocalRepos ? `file://${this._PATH}/repos/${pic.name}` : pic.preUrl
-        const imgUrl = preUrl + `/${pic.game}/${pic.mode}/${pic.fileName}`
+        const imgUrl = this.preProxy + preUrl + `/${pic.game}/${pic.mode}/${pic.fileName}`
         logger.info(imgUrl)
 
         return await this.e.reply(segment.image(imgUrl))
