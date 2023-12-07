@@ -12,7 +12,7 @@ export class RandomImages extends plugin {
             priority: 100,
             rule: [
                 {
-                    reg: '^#?随机(.*)(图片|照片|图像)$',
+                    reg: '^#?(随机)?(.*)(图片|照片|图像)$',
                     fnc: 'randomImage'
                 }
             ]
