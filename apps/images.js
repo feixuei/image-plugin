@@ -22,7 +22,7 @@ export class RandomImages extends plugin {
         this.defData = utils.readJson(`${this._PATH}/defSet/data.json`)
         this.DATA_PATH = this._PATH + '/data'
         this.cfg = utils.getCfg('config')
-        this.preProxy = this.cfg.usePreProxy ? this.cfg.preProxy : ''
+        this.preProxy = this.cfg.usePreProxy && !this.cfg.useLocalRepos ? this.cfg.preProxy : ''
         this.preUrl = this.cfg.useLocalRepos ? '' : 
         this.preUrl = 'https://raw.githubusercontent.com/feixuei/genshin-images-1/main'
     }
