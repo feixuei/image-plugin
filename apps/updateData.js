@@ -71,7 +71,6 @@ export class UpdateImagesData extends plugin {
                 await this.updateRepos(this.e, repo)
             }
         }
-        logger.info(msgList)
         const forwardMsg = await common.makeForwardMsg(this.e, msgList, "更新随机图数据")
         await this.e._reply(forwardMsg)
     }
@@ -90,7 +89,7 @@ export class UpdateImagesData extends plugin {
             let command = `cd ${repoPath} &&` + await this.getUpdateType()
 
             let res = await this.execSync(command)
-            logger.info(res)
+
             if (res.error) {
                 logger.error(`随机图仓库 ${repo.name} 更新失败！`)
                 await e.reply('图片资源更新失败！\nError code: ' + res?.error?.code + '\n' + res?.error?.stack + '\n 请稍后重试。')
