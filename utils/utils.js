@@ -2,7 +2,6 @@ import fs from 'node:fs'
 import YAML from 'yaml'
 import fetch from 'node-fetch'
 
-
 class Utils {
     constructor() {
         this._PATH = `${process.cwd().replace(/\\/g, '/')}/plugins/image-plugin`

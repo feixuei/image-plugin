@@ -11,16 +11,19 @@ class ImagesInfo {
         this._PATH = `${process.cwd().replace(/\\/g, '/')}/plugins/image-plugin`
         this.dbPath = `${this._PATH}/data/images.db`
         this.defData = utils.readJson(`${this._PATH}/defSet/data.json`)
-    };
+    }
 
     async updateImageInfo(data = {}) {
         if (lodash.isEmpty(data)) return false
         for (let tag in data.tags) {
             for (let mode in data.tags[tag].images) {
                 for (let pic of data.tags[tag].images[mode]) {
-                    let sql = `INSERT INTO ${this.table} (author, tag, game, mode, name, preUrl, fileName, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP);`
-                    let res = await dbInfo.runQuery(sql, [data.author, tag, data.game, mode, data.name, data.preUrl, pic])
-                    if (res.code === 1) logger.error(res.msg)
+                    let sql = `INSERT INTO ${this.table} (author, name, branch, tag, game, mode, fileName, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP);`
+                    let res = await dbInfo.runQuery(sql, [data?.author, data?.name, data?.branch, tag, data?.game, mode, pic])
+                    if (res?.code === 1) {
+                        logger.error(res?.msg)
+                        return false
+                    }
                 }
             }
         }
@@ -28,7 +31,7 @@ class ImagesInfo {
     }
 
     async getImages(tag = '', game = 'gs', mode = 'safe') {
-        let sql = `SELECT id, author, tag, game, mode, name, preUrl, fileName FROM ${this.table} WHERE tag="${tag}" AND game="${game}" AND mode="${mode}"`
+        let sql = `SELECT id, author, name, branch, tag, game, mode, fileName FROM ${this.table} WHERE tag="${tag}" AND game="${game}" AND mode="${mode}"`
         const res = await dbInfo.selData(sql)
         if (res.code === 1) return false
         return res.data
@@ -61,23 +64,39 @@ class ImagesInfo {
         return new Promise((resolve, reject) => {
             const db = new sqlite3.Database(dbPath, (err) => {
                 if (err) {
-                    logger.error(`[查表失败] ${sql}: ${err}`);
-                    reject(err);
-                    return false;
+                    logger.error(`[查表失败] ${sql}: ${err}`)
+                    reject(err)
+                    return false
                 }
                 db.all(sql, [], (err, rows) => {
                     if (err) {
-                        logger.error(`[查表失败] ${sql}: ${err}`);
-                        reject(err);
-                        return false;
+                        logger.error(`[查表失败] ${sql}: ${err}`)
+                        reject(err)
+                        return false
                     }
-                    resolve(rows);
-                });
-            });
-            db.close();
-        });
+                    resolve(rows)
+                })
+            })
+            db.close()
+        })
 
-    };
-};
+    }
+
+    async getPreUrl(pic = {}, cfg= {}) {
+        const name = pic?.name, author =pic?.author, branch = pic?.branch
+        if (cfg?.useLocalRepos) return `file://${this._PATH}/repos/${name}`
+        switch (cfg?.useProxy) {
+            case 0:
+                return `${cfg?.rawUrl}/${author}/${name}/${branch}`
+            case 1:
+                return `${cfg?.ghUrl}/${cfg?.rawUrl}/${author}/${name}/${branch}`
+            case 2:
+                return `${cfg?.jdUrl}/${author}/${name}@${branch}`
+            default:
+                return `${cfg?.jdUrl}/${author}/${name}@${branch}`
+        }
+    }
+
+}
 
 export default new ImagesInfo();

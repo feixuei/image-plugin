@@ -27,7 +27,6 @@ export class UpdateImagesData extends plugin {
         this.defData = utils.readJson(`${this._PATH}/defSet/data.json`)
         this.DATA_PATH = this._PATH + '/data'
         this.cfg = utils.getCfg('config')
-        this.preProxy = this.cfg.usePreProxy ? this.cfg.preProxy : ''
     }
 
     async getImagesData() {
@@ -38,7 +37,8 @@ export class UpdateImagesData extends plugin {
             if (this.defData[game].length === 0) continue
             for (let repo of this.defData[game]) {
                 logger.info(`开始更新 ${repo.name} 图片数据`)
-                let data = await utils.fetchData(`${this.preProxy}${repo.data_url}`)
+                const dataUrl = await imagesInfo.getPreUrl(repo?.author, repo?.name, repo?.branch)
+                let data = await utils.fetchData(`${dataUrl}/${repo?.data_path}`)
                 if (data) {
                     utils.saveJson(`${this.DATA_PATH}/${repo.name}.json`, data)
                 } else {
@@ -49,11 +49,15 @@ export class UpdateImagesData extends plugin {
                     continue
                 }
                 data = { ...repo, ...data }
-                await imagesInfo.updateImageInfo(data)
-                msgList.push(`${repo.name} 更新成功！`)
+                const res = await imagesInfo.updateImageInfo(data)
+                if (res){
+                    msgList.push(`${repo.name} 更新成功！`)
+                } else {
+                    msgList.push(`${repo.name} 更新失败！`)
+                }
             }
         }
-        msgList.push(`随机图片数据全部更新成功！`)
+        msgList.push(`随机图片数据全部更新完成！`)
         const forwardMsg = await common.makeForwardMsg(this.e, msgList, "更新随机图片数据")
         await this.e.reply(forwardMsg)
     }

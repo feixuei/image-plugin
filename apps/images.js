@@ -1,6 +1,5 @@
 import utils from "../utils/utils.js"
 import alias from "../utils/alias.js"
-import common from "../../../lib/common/common.js"
 import imagesInfo from "../utils/imagesInfo.js"
 
 export class RandomImages extends plugin {
@@ -22,9 +21,6 @@ export class RandomImages extends plugin {
         this.defData = utils.readJson(`${this._PATH}/defSet/data.json`)
         this.DATA_PATH = this._PATH + '/data'
         this.cfg = utils.getCfg('config')
-        this.preProxy = this.cfg.usePreProxy && !this.cfg.useLocalRepos ? this.cfg.preProxy : ''
-        this.preUrl = this.cfg.useLocalRepos ? '' : 
-        this.preUrl = 'https://raw.githubusercontent.com/feixuei/genshin-images-1/main'
     }
     async randomImage() {
         const tags = await imagesInfo.getTags()
@@ -42,8 +38,8 @@ export class RandomImages extends plugin {
 
         const pic = this.getRandomValue(await imagesInfo.getImages(tag))
 
-        const preUrl = this.cfg.useLocalRepos ? `file://${this._PATH}/repos/${pic.name}` : pic.preUrl
-        const imgUrl = this.preProxy + preUrl + `/${pic.game}/${pic.mode}/${pic.fileName}`
+        const preUrl = this.cfg?.useLocalRepos ? `file://${this._PATH}/repos/${pic.name}` : await imagesInfo.getPreUrl(pic, this.cfg)
+        const imgUrl = preUrl + `/${pic.game}/${pic.mode}/${pic.fileName}`
         logger.info(imgUrl)
 
         return await this.e.reply(segment.image(imgUrl))

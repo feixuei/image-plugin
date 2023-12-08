@@ -3,17 +3,17 @@
         {
             "name": "genshin-images-1",
             "author": "feixuei",
+            "branch": "main",
             "repo": "https://github.com/feixuei/genshin-images-1",
-            "data_url": "https://raw.githubusercontent.com/feixuei/genshin-images-1/main/data.json",
-            "preUrl": "https://raw.githubusercontent.com/feixuei/genshin-images-1/main",
+            "data_path": "data.json",
             "desc": "哒哒哒~"
         },
         {
             "name": "genshin-images-2",
             "author": "feixuei",
+            "branch": "main",
             "repo": "https://github.com/feixuei/genshin-images-2",
-            "data_url": "https://raw.githubusercontent.com/feixuei/genshin-images-2/main/data.json",
-            "preUrl": "https://raw.githubusercontent.com/feixuei/genshin-images-2/main",
+            "data_path": "data.json",
             "desc": "啦啦啦~"
         }
     ],

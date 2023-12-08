@@ -1,10 +1,14 @@
 # 复制该文件到当前目录，并改名为 config.yaml
 # 配置文件
 
-# 使用直链 GitHub代理
-usePreProxy: true
-preProxy: https://mirror.ghproxy.com/
-
-# 使用本地图片/clone到本地的仓库；默认false 使用直链获取图片
+# 使用本地图片/clone到本地的仓库；false: 从GitHub上获取图片 true: 将图片仓库克隆到本地使用
 useLocalRepos: false
+
+
+# 使用直链 0: 不使用代理 1: ghproxy代理 2: 使用jsdelivr代理
+useProxy: 2
+
+rawUrl: https://raw.githubusercontent.com
+ghUrl: https://mirror.ghproxy.com
+jdUrl: https://cdn.jsdelivr.net/gh
 

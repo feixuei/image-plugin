@@ -3,11 +3,11 @@ import sqlite3 from "sqlite3"
 const FIELDS = [
     { name: "id", type: "INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT" },
     { name: "author", type: "VARCHAR NOT NULL" },
+    { name: "name", type: "VARCHAR NOT NULL" },
+    { name: "branch", type: "VARCHAR NOT NULL" },
     { name: "tag", type: "VARCHAR NOT NULL" },
     { name: "game", type: "VARCHAR NOT NULL" },
     { name: "mode", type: "VARCHAR NOT NULL" },
-    { name: "name", type: "VARCHAR NOT NULL" },
-    { name: "preUrl", type: "VARCHAR NOT NULL" },
     { name: "fileName", type: "VARCHAR NOT NULL" },
     { name: "createdAt", type: "DATETIME NOT NULL" },
 ]

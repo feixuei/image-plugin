@@ -17,7 +17,6 @@ for (let i in files) {
         continue
     }
 
-    // apps[name] = ret[i].value[Object.keys(ret[i].value)[0]]
     for (let clazz of Object.keys(ret[i].value)) {
       apps[clazz] = ret[i].value[clazz]
     }
@@ -28,6 +27,5 @@ logger.info('image-plugin载入成功!')
 logger.info('仓库地址 https://github.com/feixuei/image-plugin')
 logger.info('插件群号: 0000000000')
 logger.info('Created By feixuei')
-logger.info('-----------------------')
 
 export { apps }
