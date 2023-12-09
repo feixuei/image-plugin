@@ -70,14 +70,12 @@ class Utils {
         } else { return false }
     }
 
-    mkdirs(dirname) {
-        if (fs.existsSync(dirname)) {
+    mkdirs(dirPath) {
+        if (fs.existsSync(dirPath)) {
             return true
         } else {
-            if (mkdirs(path.dirname(dirname))) {
-                fs.mkdirSync(dirname)
-                return true
-            }
+            fs.mkdirSync(dirPath)
+            return true
         }
     }
 

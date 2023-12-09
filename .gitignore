@@ -1,9 +1,8 @@
 /temp
 
-/data/*
-!/data/data.txt
+/data
 
-/config/config.yaml
+/config
+!/config/default
 
-/repos/*
-!/repos/repos.txt
+/repos
