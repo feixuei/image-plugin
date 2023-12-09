@@ -1,5 +1,5 @@
 import fs from "fs"
-import utils from "./utils/utils.js"
+import init from "./utils/init.js"
 
 let ret = []
 let apps = {}
@@ -23,7 +23,7 @@ for (let i in files) {
     }
 }
 
-utils.initFiles()
+await init.initCfg()
 
 logger.info('----------^-^----------')
 logger.info('image-plugin载入成功!')

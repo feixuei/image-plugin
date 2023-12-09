@@ -4,14 +4,21 @@
 useLocalRepos: false
 
 
-# 图片使用直链 0: 不使用代理 1: ghproxy代理 2: 使用jsdelivr代理 3: 使用ChinaJsDelivr代理 4: 使用moeyy代理
+# 图片使用直链 0: 不使用代理 1: ghproxy代理 2: 使用jsdelivr代理 3: 使用ChinaJsDelivr代理 4: 使用moeyy代理 9: 自动
 useProxy: 3
 
-rawUrl: https://raw.githubusercontent.com
-ghUrl: https://mirror.ghproxy.com
-jsdUrl: https://cdn.jsdelivr.net/gh
-cjsdUrl: https://jsd.cdn.zzko.cn/gh
-moeyyUrl: https://github.moeyy.xyz
+proxies:
+  - https://raw.githubusercontent.com
+  - https://mirror.ghproxy.com
+  - https://cdn.jsdelivr.net/gh
+  - https://jsd.cdn.zzko.cn/gh
+  - https://github.moeyy.xyz
+
+
+# 自动测试代理定时任务 默认每30分钟一次
+autoTestProxy: true
+proxyTestTask: 0 0/30 * * * ?
+
 
 # 图片仓库clone是否使用ghproxy代理
 reposCloneUseProxy: true

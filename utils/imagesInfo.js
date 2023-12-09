@@ -65,6 +65,21 @@ class ImagesInfo {
         return res.data.map(item => item.tag)
     }
 
+    async getRandomImgInfo(num = 1) {
+        const tableNames = await this.getTableNames()
+        const sql = this.unionQuery(["author", "name", "branch", "game", "mode", "fileName"], tableNames)
+        const res = await dbInfo.selData(sql)
+        if (res.code === 1) {
+            logger.error(res.msg)
+            return false
+        }
+        const rdData = []
+        for (let i=0; i<num; i++) {
+            rdData.push(res.data[Math.floor(Math.random() * res.data.length)])
+        }
+        return rdData
+    }
+
     async getTableNames() {
         const sql = "SELECT name FROM sqlite_master WHERE type='table';"
         let res = await dbInfo.selData(sql)
@@ -100,6 +115,8 @@ class ImagesInfo {
             return false
         }
 
+        if (fields?.length === 0) fields = ['*']
+
         const unionQuerySQL = tableNames.map((tableName, index) => {
             const separator = index === 0 ? '' : ' UNION '
             return `${separator}SELECT ${fields.join(',')} FROM ${tableName}`
@@ -111,27 +128,27 @@ class ImagesInfo {
         return 'imgs_' + tableName.replace(/\-/g, '_')
     }
 
-    async getPreUrl(picInfo = {}, cfg = {}) {
+    async getPreUrl(picInfo = {}, cfg = {}, isDataUrl = false) {
         const name = picInfo?.name, author = picInfo?.author, branch = picInfo?.branch
-        if (cfg?.useLocalRepos) return `file://${this._PATH}/repos/${name}`
+        if (!isDataUrl && cfg?.useLocalRepos) return `file://${this._PATH}/repos/${name}`
         switch (cfg?.useProxy) {
             case 0:
                 // GitHub直链
-                return `${cfg?.rawUrl}/${author}/${name}/${branch}`
+                return `${cfg.proxies[0]}/${author}/${name}/${branch}`
             case 1:
                 // ghproxy代理
-                return `${cfg?.ghUrl}/${cfg?.rawUrl}/${author}/${name}/${branch}`
+                return `${cfg.proxies[1]}/${cfg.proxies[0]}/${author}/${name}/${branch}`
             case 2:
                 // jsdelivr代理
-                return `${cfg?.jsdUrl}/${author}/${name}@${branch}`
+                return `${cfg.proxies[2]}/${author}/${name}@${branch}`
             case 3:
                 // ChinaJsDelivr代理
-                return `${cfg?.cjsdUrl}/${author}/${name}@${branch}`
+                return `${cfg.proxies[3]}/${author}/${name}@${branch}`
             case 4:
                 // moeyy代理
-                return `${cfg?.moeyyUrl}/${cfg?.rawUrl}/${author}/${name}/${branch}`
+                return `${cfg.proxies[4]}/${cfg.proxies[0]}/${author}/${name}/${branch}`
             default:
-                return `${cfg?.jdUrl}/${author}/${name}@${branch}`
+                return `${cfg.proxies[3]}/${author}/${name}@${branch}`
         }
     }
 

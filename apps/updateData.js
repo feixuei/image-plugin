@@ -1,8 +1,11 @@
+import cfg from "../utils/cfg.js"
 import utils from "../utils/utils.js"
 import imagesInfo from "../utils/imagesInfo.js"
+import speedTest from "../utils/speedTest.js"
 import common from "../../../lib/common/common.js"
-import lodash from "lodash"
+
 import fs from "node:fs"
+import lodash from "lodash"
 import { exec } from 'child_process'
 
 export class UpdateImagesData extends plugin {
@@ -19,28 +22,39 @@ export class UpdateImagesData extends plugin {
                 }, {
                     reg: '^#随机图片(强制)?更新',
                     fnc: 'pullImagesData'
+                }, {
+                    reg: '^#speedTest$',
+                    fnc: 'testTask'
                 }
             ]
         })
 
         this._PATH = `${process.cwd().replace(/\\/g, '/')}/plugins/image-plugin`
-        this.defData = utils.readJson(`${this._PATH}/defSet/data.json`)
-        this.DATA_PATH = this._PATH + '/data'
-        this.cfg = utils.getCfg('config')
+        this.task = [
+            {
+                cron: cfg.config.proxyTestTask,
+                name: '代理自动测试',
+                fnc: () => this.testTask()
+            }
+        ]
+    }
+
+    async testTask() {
+        await speedTest.testTask()
     }
 
     async updateImagesData() {
         let msgList = []
-        for (let game in this.defData) {
-            if (this.defData[game].length === 0) continue
-            for (let repo of this.defData[game]) {
+        for (let game in cfg.defData) {
+            if (cfg.defData[game].length === 0) continue
+            for (let repo of cfg.defData[game]) {
                 logger.info(`开始更新 ${repo.name} 图片数据`)
-                const dataUrl = await imagesInfo.getPreUrl(repo, this.cfg)
+                const dataUrl = await imagesInfo.getPreUrl(repo, cfg.config, true)
                 let data = await utils.fetchData(`${dataUrl}/${repo?.data_path}`)
                 if (data) {
-                    utils.saveJson(`${this.DATA_PATH}/${repo.name}.json`, data)
+                    utils.saveJson(`${this._PATH}/data/${repo.name}.json`, data)
                 } else {
-                    data = utils.getData(repo.name)
+                    data = cfg.defData
                 }
                 if (!data) {
                     msgList.push(`${repo.name} 数据获取失败！`)
@@ -70,10 +84,10 @@ export class UpdateImagesData extends plugin {
         this.e._reply = this.e.reply
         this.e.reply = (msg) => { msgList.push(msg) }
 
-        if (!this.cfg.useLocalRepos) return
-        for (let game in this.defData) {
-            if (this.defData[game].length === 0) continue
-            for (let repo of this.defData[game]) {
+        if (!cfg.config.useLocalRepos) return
+        for (let game in cfg.defData) {
+            if (cfg.defData[game].length === 0) continue
+            for (let repo of cfg.defData[game]) {
                 await this.updateRepos(this.e, repo)
             }
         }

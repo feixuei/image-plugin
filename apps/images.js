@@ -1,4 +1,4 @@
-import utils from "../utils/utils.js"
+import cfg from "../utils/cfg.js"
 import alias from "../utils/alias.js"
 import imagesInfo from "../utils/imagesInfo.js"
 
@@ -18,10 +18,8 @@ export class RandomImages extends plugin {
         })
         
         this._PATH = `${process.cwd().replace(/\\/g, '/')}/plugins/image-plugin`
-        this.defData = utils.readJson(`${this._PATH}/defSet/data.json`)
-        this.DATA_PATH = this._PATH + '/data'
-        this.cfg = utils.getCfg('config')
     }
+
     async randomImage() {
         const tags = await imagesInfo.getTags()
 
@@ -40,7 +38,7 @@ export class RandomImages extends plugin {
 
         const pic = this.getRandomValue(pics)
 
-        const preUrl = this.cfg?.useLocalRepos ? `file://${this._PATH}/repos/${pic.name}` : await imagesInfo.getPreUrl(pic, this.cfg)
+        const preUrl = cfg.config.useLocalRepos ? `file://${this._PATH}/repos/${pic.name}` : await imagesInfo.getPreUrl(pic, cfg.config)
         const imgUrl = preUrl + `/${pic.game}/${pic.mode}/${pic.fileName}`
         logger.info(imgUrl)
 

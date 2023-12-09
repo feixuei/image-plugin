@@ -3,28 +3,7 @@ import YAML from 'yaml'
 import fetch from 'node-fetch'
 
 class Utils {
-    constructor() {
-        this._PATH = `${process.cwd().replace(/\\/g, '/')}/plugins/image-plugin`
-        this.CFG_PATH = `${this._PATH}/config`
-        this.DATA_PATH = `${this._PATH}/data`
-    }
-    getCfg(fileName) {
-        let data = this.readYaml(`${this.CFG_PATH}/${fileName}.yaml`)
-        if (data) return data
-        return this.readYaml(`${this.CFG_PATH}/default/default_${fileName}.yaml`)
-    }
-
-    saveCfg(fileName, data = {}) {
-        return this.saveYaml(`${this.CFG_PATH}/${fileName}.yaml`, data)
-    }
-
-    getData(fileName) {
-        return this.readJson(`${this.DATA_PATH}/${fileName}.json`)
-    }
-
-    saveData(fileName, data = {}) {
-        return this.saveJson(`${this.DATA_PATH}/${fileName}.json`, data)
-    }
+    constructor() {}
 
     readYaml(filePath) {
         try {
@@ -64,7 +43,7 @@ class Utils {
         return false
     }
 
-    checkFile(filePath) {
+    isExists(filePath) {
         if (fs.existsSync(filePath)) {
             return true
         } else { return false }
@@ -77,21 +56,6 @@ class Utils {
             fs.mkdirSync(dirPath)
             return true
         }
-    }
-
-    initFiles() {
-        const files = ['defSet/gsName.yaml', 'config/default/default_config.yaml']
-
-        files.forEach(file => {
-            const fileName = file.replace(/.*\/([^\/]+)$/, '$1').replace(/default_/g, '')
-            fs.copyFileSync(`${this._PATH}/${file}`, `${this._PATH}/config/${fileName}`)
-        })
-
-        const dirs = ['data', 'repos']
-        dirs.forEach(dir => {
-            this.mkdirs(`${this._PATH}/${dir}`)
-        })
-
     }
 
 
