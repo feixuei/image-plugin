@@ -15,7 +15,7 @@ export class UpdateImagesData extends plugin {
             rule: [
                 {
                     reg: '^#随机图片数据更新$',
-                    fnc: 'getImagesData'
+                    fnc: 'updateImagesData'
                 }, {
                     reg: '^#随机图片(强制)?更新',
                     fnc: 'pullImagesData'
@@ -29,10 +29,8 @@ export class UpdateImagesData extends plugin {
         this.cfg = utils.getCfg('config')
     }
 
-    async getImagesData() {
+    async updateImagesData() {
         let msgList = []
-        let res = await imagesInfo.refreshTable()
-        if (!res) return
         for (let game in this.defData) {
             if (this.defData[game].length === 0) continue
             for (let repo of this.defData[game]) {
@@ -48,11 +46,15 @@ export class UpdateImagesData extends plugin {
                     msgList.push(`${repo.name} 数据获取失败！`)
                     continue
                 }
+                let res = await imagesInfo.refreshTable(repo.name)
+                if (!res) return
                 data = { ...repo, ...data }
-                const res = await imagesInfo.updateImageInfo(data)
+                res = await imagesInfo.updateImageInfo(data, repo.name)
                 if (res){
+                    logger.info(`${repo.name} 更新成功！`)
                     msgList.push(`${repo.name} 更新成功！`)
                 } else {
+                    logger.error(`${repo.name} 更新失败！`)
                     msgList.push(`${repo.name} 更新失败！`)
                 }
             }

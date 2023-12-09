@@ -14,45 +14,52 @@ const FIELDS = [
 
 class DB {
     constructor() {
-        this.table = 'images'
         this.dbPath = `${process.cwd()}/plugins/image-plugin/data/images.db`
-        this.createTable(this.table, FIELDS)
     }
 
     async runQuery(sql, params = []) {
         return new Promise((resolve) => {
-            const db = new sqlite3.Database(this.dbPath);
+            const db = new sqlite3.Database(this.dbPath)
             db.run(sql, params, function (err) {
                 if (err) {
-                    resolve({ "code": 1, "msg": String(err), "data": "" });
+                    resolve({ "code": 1, "msg": String(err), "data": "" })
                 } else { resolve({ "code": 0, "msg": "true", "data": "" }) }
-            });
-            db.close();
-        });
+            })
+            db.close()
+        })
     }
     
     async selData(sql) {
         return new Promise((resolve) => {
-            const db = new sqlite3.Database(this.dbPath);
+            const db = new sqlite3.Database(this.dbPath)
             db.all(sql, [], (err, rows) => {
                 if (err) {
-                    resolve({ "code": 1, "msg": String(err), "data": "" });
+                    resolve({ "code": 1, "msg": String(err), "data": "" })
                 } else { resolve({ "code": 0, "msg": "true", "data": rows }) }
             });
-            db.close();
+            db.close()
         });
     }
 
-    async createTable(tableName, columns) {
-        const columnDefinitions = columns.map((column) => `${column.name} ${column.type}`).join(', ');
-        const sql = `CREATE TABLE IF NOT EXISTS ${tableName} (${columnDefinitions});`;
+    async createTable(tableName, columns=FIELDS) {
+        const columnDefinitions = columns.map((column) => `${column.name} ${column.type}`).join(', ')
+        const sql = `CREATE TABLE IF NOT EXISTS ${tableName} (${columnDefinitions});`
         try {
             return await this.runQuery(sql);
         } catch (error) {
             logger.error(`Error creating table: ${error}`)
-            return false;
+            return false
         }
+    }
 
+    async dropTable(tableName) {
+        const sql = `DROP TABLE IF EXISTS ${tableName};`
+        try {
+            return await this.runQuery(sql);
+        } catch (error) {
+            logger.error(`Error droping table: ${error}`)
+            return { "code": 1, "msg": String(error), "data": "" }
+        }
     }
 
 }

@@ -35,8 +35,10 @@ export class RandomImages extends plugin {
         }else {
             tag = this.getRandomValue(tags)
         }
+        const pics = await imagesInfo.getImages({tag})
+        if (!pics) return false
 
-        const pic = this.getRandomValue(await imagesInfo.getImages(tag))
+        const pic = this.getRandomValue(pics)
 
         const preUrl = this.cfg?.useLocalRepos ? `file://${this._PATH}/repos/${pic.name}` : await imagesInfo.getPreUrl(pic, this.cfg)
         const imgUrl = preUrl + `/${pic.game}/${pic.mode}/${pic.fileName}`

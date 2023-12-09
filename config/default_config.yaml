@@ -4,10 +4,15 @@
 useLocalRepos: false
 
 
-# 使用直链 0: 不使用代理 1: ghproxy代理 2: 使用jsdelivr代理
-useProxy: 2
+# 图片使用直链 0: 不使用代理 1: ghproxy代理 2: 使用jsdelivr代理 3: 使用ChinaJsDelivr代理 4: 使用moeyy代理
+useProxy: 3
 
 rawUrl: https://raw.githubusercontent.com
 ghUrl: https://mirror.ghproxy.com
 jdUrl: https://cdn.jsdelivr.net/gh
+cjdUrl: https://jsd.cdn.zzko.cn/gh
+moeyyUrl: https://github.moeyy.xyz
+
+# 图片仓库clone是否使用ghproxy代理
+reposCloneUseProxy: true
 
