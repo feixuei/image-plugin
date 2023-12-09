@@ -1,4 +1,5 @@
 import fs from "fs"
+import utils from "./utils/utils.js"
 
 let ret = []
 let apps = {}
@@ -22,10 +23,12 @@ for (let i in files) {
     }
 }
 
+utils.initFiles()
+
 logger.info('----------^-^----------')
 logger.info('image-plugin载入成功!')
 logger.info('仓库地址 https://github.com/feixuei/image-plugin')
-logger.info('插件群号: 0000000000')
-logger.info('Created By feixuei')
+logger.info('闲聊群: 611735069')
+logger.info('-----------------------')
 
 export { apps }

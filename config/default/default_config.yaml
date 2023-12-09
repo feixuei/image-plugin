@@ -9,8 +9,8 @@ useProxy: 3
 
 rawUrl: https://raw.githubusercontent.com
 ghUrl: https://mirror.ghproxy.com
-jdUrl: https://cdn.jsdelivr.net/gh
-cjdUrl: https://jsd.cdn.zzko.cn/gh
+jsdUrl: https://cdn.jsdelivr.net/gh
+cjsdUrl: https://jsd.cdn.zzko.cn/gh
 moeyyUrl: https://github.moeyy.xyz
 
 # 图片仓库clone是否使用ghproxy代理

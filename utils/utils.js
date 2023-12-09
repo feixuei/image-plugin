@@ -11,7 +11,7 @@ class Utils {
     getCfg(fileName) {
         let data = this.readYaml(`${this.CFG_PATH}/${fileName}.yaml`)
         if (data) return data
-        return this.readYaml(`${this.CFG_PATH}/default_${fileName}.yaml`)
+        return this.readYaml(`${this.CFG_PATH}/default/default_${fileName}.yaml`)
     }
 
     saveCfg(fileName, data = {}) {
@@ -70,22 +70,50 @@ class Utils {
         } else { return false }
     }
 
-/**
-params = {
-    method: "GET",
-    body: JSON.stringify({
-        a: "1",
-        b: "2"
-    }),
-    headers: {
-        "Content-Type": "application/json"
+    mkdirs(dirname) {
+        if (fs.existsSync(dirname)) {
+            return true
+        } else {
+            if (mkdirs(path.dirname(dirname))) {
+                fs.mkdirSync(dirname)
+                return true
+            }
+        }
     }
-    timeout: 60000
-}
 
- */
+    initFiles() {
+        const files = ['defSet/gsName.yaml', 'config/default/default_config.yaml']
 
-    async fetchData(url, params={}) {
+        files.forEach(file => {
+            const data = this.readYaml(`${this._PATH}/${file}`)
+            const fileName = file.replace(/.*\/([^\/]+)$/, '$1').replace(/default_/g, '')
+            this.saveYaml(`${this._PATH}/config/${fileName}`, data)
+        })
+
+        const dirs = ['data', 'repos']
+        dirs.forEach(dir => {
+            this.mkdirs(`${this._PATH}/${dir}`)
+        })
+
+    }
+
+
+    /**
+    params = {
+        method: "GET",
+        body: JSON.stringify({
+            a: "1",
+            b: "2"
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+        timeout: 60000
+    }
+    
+     */
+
+    async fetchData(url, params = {}) {
 
         let response = {}
         try {

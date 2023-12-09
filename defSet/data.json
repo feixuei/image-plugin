@@ -6,7 +6,7 @@
             "branch": "main",
             "repo": "https://github.com/feixuei/genshin-images-1",
             "data_path": "data.json",
-            "desc": "哒哒哒~"
+            "desc": "name保持和你的仓库命一致，data_path保持和你的data.json路径一致"
         },
         {
             "name": "genshin-images-2",

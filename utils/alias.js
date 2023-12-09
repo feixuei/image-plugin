@@ -8,6 +8,10 @@ class Alias {
     }
 
     async getGsName(aName) {
+        const gsName = utils.readYaml(`${this._PATH}/plugins/image-plugin/config/gsName.yaml`)
+        if (!gsName) {
+            gsName = utils.readYaml(`${this._PATH}/plugins/image-plugin/defSet/gsName.yaml`)
+        }
         for (let id in this.gsNames) {
             if (this.gsNames[id].includes(aName)) return this.gsNames[id][0]
         }
