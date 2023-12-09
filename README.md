@@ -6,10 +6,13 @@
 按照相应格式上传图片到自己的仓库，然后这里(data.json里面)PR你的仓库地址即可  
 **注意**: 
 
-- 请使用`webp`格式的图片  
-
-- 请勿上传超过5m大小的图片，请把图片压缩到5m以下  
+- 请勿上传超过5m大小的图片，请把图片压缩为2m以下webp格式  
 - [data.json](./data/data.json)中请勿使用相同的name   
+
+**图片压缩工具**
+- [imagestool](https://imagestool.com/zh_CN/compress-images-to-specified-size)   `本地压缩`，支持批量(最大500张左右)压缩到2m以下，支持打包下载
+- [picx](https://picx.xpoet.cn/#/toolbox/compress)   支持使用token批量上传图片到GitHub仓库，支持批量极限压缩，不支持指定大小，不支持批量下载
+- [picx](https://feixuei.github.io/#/toolbox/compress)   同上，GitHub Pages 静态服务版
 
 **PS**: 如果你有什么好的建议，请务必要告诉我！  
 
