@@ -83,9 +83,8 @@ class Utils {
         const files = ['defSet/gsName.yaml', 'config/default/default_config.yaml']
 
         files.forEach(file => {
-            const data = this.readYaml(`${this._PATH}/${file}`)
             const fileName = file.replace(/.*\/([^\/]+)$/, '$1').replace(/default_/g, '')
-            this.saveYaml(`${this._PATH}/config/${fileName}`, data)
+            fs.copyFileSync(`${this._PATH}/${file}`, `${this._PATH}/config/${fileName}`)
         })
 
         const dirs = ['data', 'repos']
