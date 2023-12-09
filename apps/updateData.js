@@ -36,6 +36,7 @@ export class UpdateImagesData extends plugin {
             for (let repo of this.defData[game]) {
                 logger.info(`开始更新 ${repo.name} 图片数据`)
                 const dataUrl = await imagesInfo.getPreUrl(repo, this.cfg)
+                logger.info(`${dataUrl}/${repo?.data_path}`)
                 let data = await utils.fetchData(`${dataUrl}/${repo?.data_path}`)
                 if (data) {
                     utils.saveJson(`${this.DATA_PATH}/${repo.name}.json`, data)
