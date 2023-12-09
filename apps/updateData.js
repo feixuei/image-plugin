@@ -110,7 +110,7 @@ export class UpdateImagesData extends plugin {
 
         } else {
             await e.reply(`开始安装随机图仓库\n${repo?.name}`)
-            let command = `git clone --depth=1 ${this.preProxy + repo.repo} ${this._PATH}/repos/${repo.name}`
+            let command = `git clone --depth=1 ${repo.repo} ${this._PATH}/repos/${repo.name}`
 
             let res = await this.execSync(command)
 

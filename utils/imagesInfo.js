@@ -111,8 +111,8 @@ class ImagesInfo {
         return 'imgs_' + tableName.replace(/\-/g, '_')
     }
 
-    async getPreUrl(pic = {}, cfg = {}) {
-        const name = pic?.name, author = pic?.author, branch = pic?.branch
+    async getPreUrl(picInfo = {}, cfg = {}) {
+        const name = picInfo?.name, author = picInfo?.author, branch = picInfo?.branch
         if (cfg?.useLocalRepos) return `file://${this._PATH}/repos/${name}`
         switch (cfg?.useProxy) {
             case 0:
