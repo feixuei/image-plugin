@@ -1,6 +1,5 @@
 import lodash from "lodash"
 
-import utils from "./utils.js"
 import dbInfo from './dbInfo.js';
 
 class ImagesInfo {
@@ -26,6 +25,7 @@ class ImagesInfo {
         return true
     }
 
+    // 根据条件生成SQL，获取随机图片信息
     async getImages(wheres = {}) {
         const fields = [ "id", "author", "name", "branch", "tag", "game", "mode", "fileName" ]
         const tableNames = await this.getTableNames()
@@ -41,6 +41,7 @@ class ImagesInfo {
         return res.data
     }
 
+    // 生成条件语句
     generateWhereClause(fields = {}) {
         if (Object.keys(fields).length === 0) {
             return ''
@@ -54,6 +55,7 @@ class ImagesInfo {
         return ` WHERE ${whereClause}`
     }
 
+    // 获取所有角色名tag
     async getTags() {
         const tableNames = await this.getTableNames()
         const unionSQL = this.unionQuery(["tag"], tableNames)
@@ -65,9 +67,10 @@ class ImagesInfo {
         return res.data.map(item => item.tag)
     }
 
+    // 从数据库所有图片中随机获取一张图片信息
     async getRandomImgInfo(num = 1) {
         const tableNames = await this.getTableNames()
-        const sql = this.unionQuery(["author", "name", "branch", "game", "mode", "fileName"], tableNames)
+        const sql = this.unionQuery(["author", "name", "branch", "tag", "game", "mode", "fileName"], tableNames)
         const res = await dbInfo.selData(sql)
         if (res.code === 1) {
             logger.error(res.msg)
@@ -80,6 +83,7 @@ class ImagesInfo {
         return rdData
     }
 
+    // 获取所有表
     async getTableNames() {
         const sql = "SELECT name FROM sqlite_master WHERE type='table';"
         let res = await dbInfo.selData(sql)
@@ -93,6 +97,7 @@ class ImagesInfo {
         return tables
     }
 
+    // 重置表，删除再重新创建！
     async refreshTable(tableName) {
         if (tableName === '') return false
         tableName = this.formatTableName(tableName)
@@ -110,6 +115,7 @@ class ImagesInfo {
         return true
     }
 
+    // 生成查询语句
     unionQuery(fields = [], tableNames = []) {
         if (tableNames.length === 0) {
             return false
@@ -124,10 +130,12 @@ class ImagesInfo {
         return unionQuerySQL + ';'
     }
 
+    // 格式化仓库名name，转化为合适的表名
     formatTableName(tableName) {
         return 'imgs_' + tableName.replace(/\-/g, '_')
     }
 
+    // 获取代理前缀url
     async getPreUrl(picInfo = {}, cfg = {}, isDataUrl = false) {
         const name = picInfo?.name, author = picInfo?.author, branch = picInfo?.branch
         if (!isDataUrl && cfg?.useLocalRepos) return `file://${this._PATH}/repos/${name}`
@@ -148,6 +156,7 @@ class ImagesInfo {
                 // moeyy代理
                 return `${cfg.proxies[4]}/${cfg.proxies[0]}/${author}/${name}/${branch}`
             default:
+                // 默认返回 3 
                 return `${cfg.proxies[3]}/${author}/${name}@${branch}`
         }
     }
