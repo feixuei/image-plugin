@@ -23,3 +23,8 @@ proxyTestTask: 0 0/30 * * * ?
 # 图片仓库clone是否使用ghproxy代理
 reposCloneUseProxy: true
 
+
+# 是否覆盖喵喵图片
+coverMiaoImgs: true
+# image-plugin优先级
+priority: 99

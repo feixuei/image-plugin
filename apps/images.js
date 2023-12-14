@@ -8,9 +8,12 @@ export class RandomImages extends plugin {
             name: '随机图片',
             dsc: '随机图片',
             event: 'message',
-            priority: 100,
+            priority: cfg.config.priority || 99,
             rule: [
                 {
+                    reg: '^#喵喵WIKI$',
+                    fnc: 'fuckMiao'
+                }, {
                     reg: '^#?(随机)?(.*)(图片|照片|图像)$',
                     fnc: 'randomImage'
                 }
@@ -21,6 +24,7 @@ export class RandomImages extends plugin {
     }
 
     async randomImage() {
+        // if (!(await this.fuckMiao()))  return false
         const tags = await imagesInfo.getTags()
 
         let tag = this.e.msg.replace(/#|随机|图片|照片|图像/g, '')
@@ -47,6 +51,12 @@ export class RandomImages extends plugin {
 
     getRandomValue(list) {
         return list[Math.floor(Math.random() * list.length)]
+    }
+
+    async fuckMiao() {
+        if (!cfg.config?.coverMiaoImgs) return false
+        this.e.msg = this.e.original_msg
+        return false
     }
 
 }

@@ -14,7 +14,7 @@ export class UpdateImagesData extends plugin {
             name: '更新随机图片数据',
             dsc: '随机图片',
             event: 'message',
-            priority: 100,
+            priority: cfg.config.priority || 99,
             rule: [
                 {
                     reg: '^#随机图片数据更新$',

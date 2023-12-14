@@ -9,7 +9,7 @@ class SpeedTester {
     }
 
     async testTask() {
-        if (!cfg.config.autoTestProxy) return
+        if (!cfg.config.autoTestProxy && !cfg.config.useLocalRepos) return
         logger.info(`[定时任务] 开始测试GitHub代理`)
         const res = await this.test(cfg.config)
         logger.info(res)

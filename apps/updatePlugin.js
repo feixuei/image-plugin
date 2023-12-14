@@ -1,3 +1,4 @@
+import cfg from "../utils/cfg.js"
 import { update } from "../../other/update.js"
 
 export class UpdateRadImage extends plugin {
@@ -6,7 +7,7 @@ export class UpdateRadImage extends plugin {
             name: '随机图插件更新',
             dsc: 'image-plugin插件更新',
             event: 'message',
-            priority: 100,
+            priority: cfg.config.priority || 99,
             rule: [
                 {
                     reg: '^#随机图插件(强制)?更新$',
