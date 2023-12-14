@@ -56,7 +56,7 @@ export class RandomImages extends plugin {
 
     async fuckMiao() {
         if (!cfg.config?.coverMiaoImgs) return false
-        if (!this.e.original_msg.test(/图片|照片|图像|写真/)) return false
+        if (!/图片|照片|图像|写真/.test(this.e.original_msg)) return false
         this.e.msg = this.e.original_msg
         return false
     }
