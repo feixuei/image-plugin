@@ -15,10 +15,10 @@ class FileWatcher {
             })
 
             this.watchers[directory].on('all', async (event, filePath) => {
-                logger.info(`[${event}] ${filePath}`)
+                // logger.info(`[${event}] ${filePath.spllt('/').pop()}`)
 
                 if (event === 'change') {
-                    cfg.init()
+                    cfg.update()
                 }
             })
         })

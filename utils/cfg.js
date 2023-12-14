@@ -14,9 +14,16 @@ class Cfg {
 
     init() {
         this.parse()
+        this.check()
         this.config = this.data()
         this.defData = utils.readJson(this.defDataPath)
-        logger.info(`[image-plugin] 配置文件初始化完成`)
+    }
+
+    update() {
+        this.parse()
+        this.config = this.data()
+        this.defData = utils.readJson(this.defDataPath)
+        logger.info(`[image-plugin] 配置已更新`)
     }
 
     /** 解析yaml */
@@ -86,6 +93,22 @@ class Cfg {
         } catch (err) {
             logger.error(`更新Yaml失败:${err?.message}`)
         }
+    }
+
+    /** 检查 */
+    check() {
+        const defaultDocument = Yaml.parseDocument(fs.readFileSync(this.defCfgPath, "utf8"))
+        const document = Yaml.parseDocument(fs.readFileSync(this.cfgPath, "utf8"))
+        const data = document.toJSON()
+        Object.keys(data).forEach(key => {
+            if (defaultDocument.has(key)) {
+                defaultDocument.setIn([key], data[key])
+            } else {
+                defaultDocument.addIn([key], data[key])
+            }
+        })
+        fs.writeFileSync(this.cfgPath, defaultDocument.toString(), 'utf8')
+        // this.init()
     }
 
 }
