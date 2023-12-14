@@ -12,7 +12,8 @@ export class RandomImages extends plugin {
             rule: [
                 {
                     reg: '^#喵喵WIKI$',
-                    fnc: 'fuckMiao'
+                    fnc: 'fuckMiao',
+                    log: false,
                 }, {
                     reg: '^#?(随机)?(.*)(图片|照片|图像)$',
                     fnc: 'randomImage'
@@ -55,6 +56,7 @@ export class RandomImages extends plugin {
 
     async fuckMiao() {
         if (!cfg.config?.coverMiaoImgs) return false
+        if (!this.e.original_msg.test(/图片|照片|图像|写真/)) return false
         this.e.msg = this.e.original_msg
         return false
     }
