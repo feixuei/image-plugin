@@ -15,7 +15,7 @@ class Alias {
         for (let id in this.gsNames) {
             if (this.gsNames[id].includes(aName)) return this.gsNames[id][0]
         }
-        return false
+        return aName
     }
 }
 
