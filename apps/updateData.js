@@ -1,7 +1,7 @@
-import cfg from "../utils/cfg.js"
-import utils from "../utils/utils.js"
-import imagesInfo from "../utils/imagesInfo.js"
-import speedTest from "../utils/speedTest.js"
+import cfg from "../models/cfg.js"
+import utils from "../models/utils.js"
+import imagesInfo from "../models/imagesInfo.js"
+import speedTest from "../models/speedTest.js"
 import common from "../../../lib/common/common.js"
 
 import fs from "node:fs"
@@ -18,13 +18,16 @@ export class UpdateImagesData extends plugin {
             rule: [
                 {
                     reg: '^#随机图片数据更新$',
-                    fnc: 'updateImagesData'
+                    fnc: 'updateImagesData',
+                    permission: 'master'
                 }, {
                     reg: '^#随机图片(强制)?更新',
-                    fnc: 'pullImagesData'
+                    fnc: 'pullImagesData',
+                    permission: 'master'
                 }, {
                     reg: '^#speedTest$',
-                    fnc: 'testTask'
+                    fnc: 'testTask',
+                    permission: 'master'
                 }
             ]
         })

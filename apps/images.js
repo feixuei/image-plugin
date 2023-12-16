@@ -1,6 +1,6 @@
-import cfg from "../utils/cfg.js"
-import alias from "../utils/alias.js"
-import imagesInfo from "../utils/imagesInfo.js"
+import cfg from "../models/cfg.js"
+import alias from "../models/alias.js"
+import imagesInfo from "../models/imagesInfo.js"
 
 export class RandomImages extends plugin {
     constructor() {
@@ -31,7 +31,7 @@ export class RandomImages extends plugin {
         let tag = this.e.msg.replace(/#|随机|图片|照片|图像/g, '')
 
         if (tag !== '') {
-            tag = await alias.getGsName(tag)
+            tag = await alias.getName(tag)
             if (!tags.includes(tag)) {
                 return await this.e.reply('暂无该角色图片！')
             }

@@ -1,4 +1,4 @@
-import cfg from "../utils/cfg.js"
+import cfg from "../models/cfg.js"
 import { update } from "../../other/update.js"
 
 export class UpdateRadImage extends plugin {
@@ -11,12 +11,13 @@ export class UpdateRadImage extends plugin {
             rule: [
                 {
                     reg: '^#随机图插件(强制)?更新$',
-                    permission: 'master',
-                    fnc: 'updateImgPlug'
+                    fnc: 'updateImgPlug',
+                    permission: 'master'
                 },
                 {
                     reg: '^#随机图插件更新日志$',
-                    fnc: 'updateImgPlugLog'
+                    fnc: 'updateImgPlugLog',
+                    permission: 'master'
                 }
             ]
         })

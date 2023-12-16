@@ -1,5 +1,5 @@
 import fs from "fs"
-import init from "./utils/init.js"
+import init from "./models/init.js"
 
 let ret = []
 let apps = {}

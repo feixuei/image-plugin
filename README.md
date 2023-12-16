@@ -12,7 +12,7 @@
 **图片压缩工具**
 - [imagestool](https://imagestool.com/zh_CN/compress-images-to-specified-size)   `本地压缩`，支持批量压缩到2m以下，支持打包下载
 - [picx](https://picx.xpoet.cn/#/toolbox/compress)   支持使用token批量上传图片到GitHub仓库，支持批量极限压缩，不支持指定大小，支持批量下载，不支持打包下载
-- [picx](https://feixuei.github.io/#/toolbox/compress)   同上，GitHub Pages 静态服务版
+- [picx](https://picx.feixue.icu/#/toolbox/compress)   同上，GitHub Pages 静态服务版，新增自定义commit和打包下载默认下载压缩包
 
 **PS**: 如果你有什么好的建议，请务必要告诉我！  
 
@@ -23,10 +23,6 @@
 git clone --depth=1 https://github.com/feixuei/image-plugin.git ./plugins/image-plugin/
 
 ```
-
-未关闭喵喵图片：`随机椰羊图片`
-
-关闭喵喵图片：`#喵喵设置图片关闭` 后可使用  `椰羊图片`
 
 1. 插件更新：`#随机图插件更新`
 
@@ -48,3 +44,4 @@ git clone --depth=1 https://github.com/feixuei/image-plugin.git ./plugins/image-
 | ---- | ---- | ---- |
 | xxx  | xxx  | xxx  |
 
+ 

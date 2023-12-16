@@ -1,0 +1,10 @@
+{
+  "name": "image-plugin",
+  "version": "1.0.1",
+  "author": "feixue",
+  "github": "https://github.com/feixuei/image-plugin.git",
+  "gitee": "",
+  "type": "module",
+  "description": "喵崽随机图插件",
+  "dependencies": {}
+}
