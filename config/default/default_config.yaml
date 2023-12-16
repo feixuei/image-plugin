@@ -22,4 +22,4 @@ reposCloneUseProxy: false
 coverMiaoImgs: false
 
 # image-plugin优先级
-priority: 99
+priority: 49
