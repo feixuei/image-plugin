@@ -1,5 +1,5 @@
-import utils from "./utils.js"
-import watch from "./watch.js"
+import utils from "./utils/utils.js"
+import watch from "./utils/watch.js"
 
 import fs from "fs"
 

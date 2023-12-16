@@ -64,11 +64,13 @@ export const helpList = [{
 }, {
   group: '管理命令，仅管理员可用',
   auth: 'master',
-  list: [{
-    icon: 85,
-    title: '#随机图设置',
-    desc: '配置随机图功能'
-  }, {
+  list: [
+  // {
+  //   icon: 85,
+  //   title: '#随机图设置',
+  //   desc: '配置随机图功能'
+  // }, 
+  {
     icon: 66,
     title: '#随机图插件(强制)?更新',
     desc: '更新随机图插件'
@@ -79,6 +81,6 @@ export const helpList = [{
   }, {
     icon: 68,
     title: '#随机图片仓库(强制)?更新',
-    desc: '更新本地图片仓库'
+    desc: '更新本地仓库中的图片'
   }]
 }]

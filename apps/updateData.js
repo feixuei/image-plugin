@@ -1,7 +1,7 @@
 import cfg from "../models/cfg.js"
-import utils from "../models/utils.js"
-import imagesInfo from "../models/imagesInfo.js"
-import speedTest from "../models/speedTest.js"
+import utils from "../models/utils/utils.js"
+import imagesInfo from "../models/info/imagesInfo.js"
+import speedTest from "../models/utils/speedTest.js"
 import common from "../../../lib/common/common.js"
 
 import fs from "node:fs"
@@ -47,6 +47,7 @@ export class UpdateImagesData extends plugin {
     }
 
     async updateImagesData() {
+        this.e.reply('开始更新随机图片数据...')
         let msgList = []
         for (let game in cfg.defData) {
             if (cfg.defData[game].length === 0) continue
@@ -82,7 +83,7 @@ export class UpdateImagesData extends plugin {
     }
 
     async pullImagesData() {
-        await this.e.reply(`开始更新随机图，请稍等~`)
+        await this.e.reply(`开始更新随机图仓库，请稍等~`)
         let msgList = []
         this.e._reply = this.e.reply
         this.e.reply = (msg) => { msgList.push(msg) }

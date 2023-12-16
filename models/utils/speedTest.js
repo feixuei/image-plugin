@@ -1,5 +1,5 @@
-import cfg from "./cfg.js"
-import imagesInfo from "./imagesInfo.js"
+import cfg from "../cfg.js"
+import imagesInfo from "../info/imagesInfo.js"
 
 import fetch from "node-fetch"
 

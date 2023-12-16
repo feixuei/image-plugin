@@ -9,18 +9,18 @@ class Utils {
         try {
             return YAML.parse(fs.readFileSync(filePath, 'utf8'))
         } catch (err) {
-            logger.error(`[Utils][readYaml] ${err}`)
+            // logger.error(`[Utils][readYaml] ${err}`)
+            return false
         }
-        return false
     }
 
     readJson(filePath) {
         try {
             return JSON.parse(fs.readFileSync(filePath, 'utf8'))
         } catch (err) {
-            logger.error(`[Utils][readJson] ${err}`)
+            // logger.error(`[Utils][readJson] ${err}`)
+            return false
         }
-        return false
     }
 
     saveYaml(filePath, data) {
@@ -28,9 +28,9 @@ class Utils {
             fs.writeFileSync(filePath, YAML.stringify(data), 'utf8')
             return true
         } catch (err) {
-            logger.error(`[Utils][saveYaml] ${err}`)
+            // logger.error(`[Utils][saveYaml] ${err}`)
+            return false
         }
-        return false
     }
 
     saveJson(filePath, data) {
@@ -38,9 +38,9 @@ class Utils {
             fs.writeFileSync(filePath, JSON.stringify(data, null, 4), 'utf8')
             return true
         } catch (err) {
-            logger.error(`[Utils][saveJson] ${err}`)
+            // logger.error(`[Utils][saveJson] ${err}`)
+            return false
         }
-        return false
     }
 
     isExists(filePath) {

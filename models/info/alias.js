@@ -1,4 +1,4 @@
-import utils from "./utils.js";
+import utils from "../utils/utils.js";
 
 class Alias {
     constructor() {
@@ -14,7 +14,7 @@ class Alias {
     }
 
     async getGsName(aName) {
-        const names = utils.readYaml(`${this._PATH}/config/gsName.yaml`)
+        let names = utils.readYaml(`${this._PATH}/config/gsName.yaml`)
         if (!names) {
             names = utils.readYaml(`${this._PATH}/defSet/gsName.yaml`)
         }
@@ -24,7 +24,7 @@ class Alias {
         return aName
     }
     async getSrName(aName) {
-        const names = utils.readYaml(`${this._PATH}/config/srName.yaml`)
+        let names = utils.readYaml(`${this._PATH}/config/srName.yaml`)
         if (!names) {
             names = utils.readYaml(`${this._PATH}/defSet/srName.yaml`)
         }

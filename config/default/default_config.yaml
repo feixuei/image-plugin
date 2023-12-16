@@ -1,9 +1,7 @@
-# 请勿修改此文件，复制该文件到当前目录，并改名为 config.yaml
-
 # 使用本地图片/clone到本地的仓库；false: 从GitHub上获取图片 true: 将图片仓库克隆到本地使用
 useLocalRepos: false
 
-# 图片使用直链 0: 不使用代理 1: ghproxy代理 2: 使用jsdelivr代理 3: 使用ChinaJsDelivr代理 4: 使用moeyy代理 9: 自动
+# 图片使用直链 0: 不使用代理 1: ghproxy代理 2: 使用jsDelivr代理 3: 使用ChinaJsDelivr代理 4: 使用moeyy代理
 useProxy: 3
 
 proxies:
@@ -18,7 +16,7 @@ autoTestProxy: true
 proxyTestTask: 0 0/30 * * * ?
 
 # 图片仓库clone是否使用ghproxy代理
-reposCloneUseProxy: true
+reposCloneUseProxy: false
 
 # 是否覆盖喵喵图片
 coverMiaoImgs: false

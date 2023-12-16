@@ -2,8 +2,8 @@ import lodash from "lodash"
 
 import cfg from "../models/cfg.js"
 import { helpCfg, helpList } from "./help/help_cfg.js"
-import Render from "../models/render.js"
-import Version from "../models/version.js"
+import Render from "../models/common/render.js"
+import Version from "../models/common/version.js"
 
 
 export class RandomImagesHelp extends plugin {

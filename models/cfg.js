@@ -1,7 +1,7 @@
 import fs from "fs"
 import Yaml from "yaml"
 import lodash from "lodash"
-import utils from "./utils.js"
+import utils from "./utils/utils.js"
 
 class Cfg {
     constructor() {

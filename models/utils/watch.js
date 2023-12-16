@@ -1,6 +1,6 @@
 import chokidar from 'chokidar'
 import fs from 'fs'
-import cfg from './cfg.js'
+import cfg from '../cfg.js'
 
 class FileWatcher {
     constructor(directories) {

@@ -1,6 +1,6 @@
 import cfg from "../models/cfg.js"
-import alias from "../models/alias.js"
-import imagesInfo from "../models/imagesInfo.js"
+import alias from "../models/info/alias.js"
+import imagesInfo from "../models/info/imagesInfo.js"
 
 export class RandomImages extends plugin {
     constructor() {
