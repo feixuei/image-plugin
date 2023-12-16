@@ -78,7 +78,7 @@ export const helpList = [{
     desc: '更新随机图片数据'
   }, {
     icon: 68,
-    title: '#随机图片更新',
+    title: '#随机图片仓库(强制)?更新',
     desc: '更新本地图片仓库'
   }]
 }]

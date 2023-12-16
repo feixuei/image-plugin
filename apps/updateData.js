@@ -21,7 +21,7 @@ export class UpdateImagesData extends plugin {
                     fnc: 'updateImagesData',
                     permission: 'master'
                 }, {
-                    reg: '^#随机图片(强制)?更新',
+                    reg: '^#随机图片仓库(强制)?更新',
                     fnc: 'pullImagesData',
                     permission: 'master'
                 }, {
