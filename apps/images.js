@@ -33,7 +33,8 @@ export class RandomImages extends plugin {
         if (tag !== '') {
             tag = await alias.getName(tag)
             if (!tags.includes(tag)) {
-                return await this.e.reply('暂无该角色图片！')
+                // return await this.e.reply('暂无该角色图片！')
+                return true
             }
         }else {
             tag = this.getRandomValue(tags)
